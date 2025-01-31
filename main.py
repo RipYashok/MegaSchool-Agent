@@ -3,6 +3,7 @@ import xml.etree.ElementTree as ET
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import logging
+import os
 from typing import List
 
 # Настраиваем логирование
@@ -11,8 +12,8 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
-API_KEY = "--"  # API-ключ из Yandex Cloud
-FOLDER_ID = "b1gqh3flnr7k5agn468b"  # Folder ID из Yandex Cloud
+API_KEY = os.getenv("API_KEY")
+FOLDER_ID = os.getenv("FOLDER_ID")
 
 class SearchRequest(BaseModel):
     query: str
@@ -21,7 +22,7 @@ class SearchRequest(BaseModel):
 def get_llm_response(query: str) -> str:
 
 
-    LLM_API_KEY = '--'
+    LLM_API_KEY = os.getenv("LLM_API_KEY")
 
 
     LLM_API_URL = 'https://api.together.xyz/v1/completions'
