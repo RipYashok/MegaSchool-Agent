@@ -36,9 +36,9 @@ def get_llm_response(query: str) -> str:
 
 
     data = {
-        'model': 'meta-llama/Llama-Vision-Free',
+        'model': 'meta-llama/Llama-3.3-70B-Instruct-Turbo',
         "messages": [{"role": "user", "content": query}],
-        'max_tokens': 1000,
+        'max_tokens': 10,
         'temperature': 0.7
     }
 
