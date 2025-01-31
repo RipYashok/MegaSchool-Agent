@@ -36,7 +36,7 @@ def get_llm_response(query: str) -> str:
 
 
     data = {
-        'model': 'deepseek-ai/DeepSeek-R1-Distill-Llama-70B-free',
+        'model': 'meta-llama/Llama-Vision-Free',
         "messages": [{"role": "user", "content": query}],
         'max_tokens': 1000,
         'temperature': 0.7
