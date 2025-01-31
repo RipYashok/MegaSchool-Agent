@@ -6,7 +6,7 @@ import logging
 import os
 from typing import List
 
-# Настраиваем логирование
+
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
@@ -36,16 +36,16 @@ def get_llm_response(query: str) -> str:
 
 
     data = {
-        'model': 'meta-llama/Llama-3.3-70B-Instruct-Turbo-Free',
+        'model': 'deepseek-ai/DeepSeek-R1-Distill-Llama-70B-free',
         "messages": [{"role": "user", "content": query}],
         'max_tokens': 1000,
         'temperature': 0.7
     }
 
-    # Выполнение POST-запроса
+    
     response = requests.post(LLM_API_URL, headers=headers, json=data)
 
-    # Проверка статуса ответа
+    
     if response.status_code == 200:
         result = response.json()
         if result['choices'][0]['text'] == '-1':
@@ -62,10 +62,10 @@ async def search(request: SearchRequest):
     try:
         logger.debug(f"Получен запрос с query: {request.query}")
         
-        # URL для запроса к Yandex Search API
+        
         url = f"https://yandex.ru/search/xml?folderid={FOLDER_ID}&apikey={API_KEY}&query={request.query}"
 
-        # Параметры запроса
+        
         params = {
             "text": request.query,
             "lang": "ru", 
@@ -73,22 +73,22 @@ async def search(request: SearchRequest):
             "limit": 1,
         }
         
-        # Выполняем запрос
+        
         response = requests.get(url, params=params, timeout=10)
         response.raise_for_status()
         logger.debug("Получен ответ от API")
         
-        # Выводим содержимое ответа для отладки
+        
         logger.debug(f"Ответ API: {response.text}")
         
-        # Парсим XML
+        
         root = ET.fromstring(response.text)
         search_results = []
         
         extended = ""
         sources = []
-        # Обрабатываем только первые 3 результата
-        for doc in root.findall('.//doc')[:3]:  # Дополнительное ограничение на уровне обработки
+        
+        for doc in root.findall('.//doc')[:3]: 
             url_elem = doc.find('.//url')
             extended_elem = doc.find('.//extended-text')
             
